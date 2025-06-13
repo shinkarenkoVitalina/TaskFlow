@@ -1,0 +1,177 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Рабочее пространство</title>
+    <link rel="stylesheet" href="{% static 'workspace/css/nwp.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+
+{% if request.user.is_authenticated %}
+    <body>
+        <div class="workspace">
+            <!-- Настройки -->
+            <div class="settings-icon" onclick="toggleSettings()">
+                <i class="fas fa-cog"></i> <!-- Иконка шестеренки -->
+            </div>
+            <div class="settings-card" id="settingsCard">
+                <p>Пользователь: {{ user.username }}</p>
+                <a href="{% url 'mainpage' %}" class="btn-logout">Выйти</a>
+            </div>
+
+            <!-- Контейнер для списков -->
+            <div class="lists-container">
+                {% for l in lists %}
+                <div class="list">
+                    <div class="list-header">
+                        <h3>{{ l.title }}</h3>
+                        <div class="list-options" onclick="toggleOptions(this, '.list-options-menu')">
+                            <i class="fas fa-ellipsis-h"></i>
+                        </div>
+                        <div class="list-options-menu">
+                            <form action="{% url 'delete_el' 'list' l.pk %}" method="post">
+                                {% csrf_token %}
+                                <button class="btn delete-list">Удалить Список</button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Контейнер для карточек в списке -->
+                    <div class="cards-container">
+                        {% for c in cards %}
+                        {% if c.parent_id == l.id %}
+                        <div class="card" onclick="openCardModal('modal-{{ c.id }}')">
+                            <p>{{ c.title }}</p>
+                        </div>
+
+                        <!-- Модальное окно карточки -->
+                        <div class="card-modal" id="modal-{{ c.id }}">
+                            <div class="modal-content">
+                                <h3>{{ c.title }}</h3>
+                                <textarea placeholder="Добавьте описание..."></textarea>
+                                <div class="modal-actions">
+                                    <button class="btn-save"> Сохранить </button>
+                                </div>
+                                <div class="modal-actions">
+                                    <button class="btn add-deadline"><i class="fas fa-calendar-alt"></i> Добавить дедлайн</button>
+                                    <button class="btn add-checklist-btn"> <i class="fas fa-check-square"></i> Добавить чек-лист </button>
+                                    <form action="{% url 'delete_el' 'card' c.pk %}" method="post">
+                                        {% csrf_token %}
+                                        <button class="btn delete-card"><i class="fas fa-trash"></i> Удалить карточку</button>
+                                    </form>
+                                </div>
+
+                                <!-- Чек-лист внутри модального окна -->
+                                {% for cl in checklists %}
+                                {% if cl.parent_id == c.id %}
+                                <div class="checklist">
+                                    <!-- Заголовок чек-листа с меню -->
+                                    <div class="checklist-header">
+                                        <h4>{{ cl.title }}</h4>
+                                        <div class="checklist-options" onclick="toggleOptions(this, '.checklist-options-menu')">
+                                            <i class="fas fa-ellipsis-h"></i>
+                                        </div>
+                                        <!-- Выпадающий список для удаления чек-листа -->
+                                        <div class="checklist-options-menu">
+                                            <form action="{% url 'delete_el' 'checklist' cl.pk %}" method="post">
+                                                {% csrf_token %}
+                                                <button class="btn delete-checklist"><i class="fas fa-trash"></i> Удалить Чек-лист</button>
+                                            </form>
+                                        </div>
+                                    </div>
+
+                                    <!-- Пункты чек-листа -->
+                                    {% for el in clcards %}
+                                    {% if el.parent_id == cl.id %}
+                                    <div class="checklist-items">
+                                        <div class="checklist-item">
+                                            <input type="checkbox" class="item-checkbox">
+                                            <span class="item-text">{{ el.title }}</span>
+                                            <!-- Меню пункта -->
+                                            <div class="item-dots" onclick="toggleOptions(this, '.item-options-menu')">
+                                                <i class="fas fa-ellipsis-h"></i>
+                                            </div>
+                                            <!-- Выпадающий список для удаления пункта -->
+                                            <div class="item-options-menu">
+                                                <form action="{% url 'delete_el' 'checklist_item' el.pk %}" method="post">
+                                                    {% csrf_token %}
+                                                    <button class="btn delete-checklist"><i class="fas fa-trash"></i> Удалить элемент</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% endif %}
+                                    {% endfor %}
+
+                                    <!-- Кнопка добавления пункта -->
+                                    <button class="btn add-checklist-item-btn" onclick="showForm(this, 'add-checklist-item-form', 'add-checklist-item-btn', 'add-checklist-item-container')">+ Добавить пункт</button>
+
+
+                                </div>
+                                {% endif %}
+                                {% endfor %}
+
+
+                                <button class="btn close-modal" onclick="closeCardModal('modal-{{ c.id }}')">Закрыть</button>
+                            </div>
+                        </div>
+                        {% endif %}
+                        {% endfor %}
+
+                        <!-- Кнопка добавления карточки -->
+                        <div class="add-card-container">
+                            <button class="btn add-card" onclick="showForm(this, 'add-card-form', 'add-card', 'add-card-container')">+ Добавить карточку</button>
+                            <div class="add-card-form" style="display: none;">
+                                <form action="{% url 'create_el' 'card' 'list' l.id %}" method="post">
+                                    {% csrf_token %}
+                                    {{ cardform.as_p }}
+
+                                    <div class="add-card-actions">
+                                        <button class="btn create-card">Создать</button>
+                                        <button class="btn cancel-card" onclick="hideForm(this, 'add-card-form', 'add-card', 'add-card-container')"><i class="fas fa-times"></i></button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                {% endfor %}
+
+                <!-- Кнопка добавления списка -->
+                <div class="add-list-container">
+                <button class="btn add-list" onclick="showForm(this, 'add-list-form', 'add-list', 'add-list-container')">+ Добавить список</button>
+                    <div class="add-list-form" style="display: none;">
+                        <form action="{% url 'create_list' %}" method="post">
+                            {% csrf_token %}
+                            {{ lform.as_p }}
+
+                            <div class="add-list-actions">
+                                <button class="btn create-list">Создать</button>
+                                <button class="btn cancel-list" onclick="hideForm(this, 'add-list-form', 'add-list', 'add-list-container')"><i class="fas fa-times"></i></button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </body>
+{% else %}
+    <!-- Интерфейс для неавторизованных пользователей -->
+    <body class="no_auth">
+        <h1> Похоже вы еще не авторизованы. <br> Пожалуйста войдите в аккаунт или зарегистрируйтесь</h1>
+        <div class="buttons">
+            <a href="{% url 'auth' %}" class="btn-login">Войти</a>
+            <a href="{% url 'reg' %}" class="btn-login">Зарегистрироваться</a>
+        </div>
+    </body>
+{% endif %}
+
+<script src="{% static 'workspace/js/workspace.js' %}" defer></script>
+
+</html>
+

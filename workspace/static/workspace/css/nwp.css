@@ -1,0 +1,510 @@
+/* Основные стили страницы */
+body {
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #6a11cb, #2575fc); /* Градиентный фон */
+    color: #fff;
+    height: 100vh;
+    overflow: hidden; /* Запрет прокрутки основной страницы */
+}
+
+/* Основной контейнер рабочего пространства */
+.workspace {
+    position: relative;
+    padding: 20px;
+    height: 100%;
+}
+
+/* Иконка настроек */
+.settings-icon {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 24px;
+    cursor: pointer;
+    color: #fff;
+}
+
+/* Карточка настроек */
+.settings-card {
+    position: absolute;
+    top: 60px;
+    right: 20px;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    display: none;
+    color: #333;
+}
+
+.settings-card.active {
+    display: block;
+}
+
+.settings-card p {
+    margin: 0 0 10px 0;
+}
+
+/* Контейнер списков */
+.lists-container {
+    display: flex;
+    overflow-x: auto;
+    gap: 20px;
+    padding: 20px;
+    height: 100%;
+    width: 100%;
+}
+
+/* Стили отдельного списка */
+.list {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    padding: 15px;
+    min-width: 250px;
+    width: 250px;
+    display: flex;
+    flex-direction: column;
+    height: fit-content; /* Автоматическая высота */
+    max-height: 90vh; /* Максимальная высота */
+}
+
+/* Шапка списка */
+.list-header {
+    position: relative; /* Добавляем для корректного позиционирования меню */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.list-header h3 {
+    margin: 0;
+}
+
+.list-options {
+    cursor: pointer;
+    font-size: 18px;
+    position: relative;
+}
+
+.list-options-menu {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: 100%;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    z-index: 2;
+}
+
+/* Карточки */
+.cards-container {
+    flex-grow: 1;
+    overflow-y: auto;
+    margin-bottom: 10px;
+    min-width: 250px;
+    max-width: 250px;
+    width: 250px;
+    padding-right: 5px;
+    position: relative; /* Для sticky-позиционирования */
+}
+
+.card {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    word-wrap: break-word; /* Перенос длинных слов */
+    overflow-wrap: break-word;
+
+    /* Свойства для переноса текста */
+    word-break: break-all; /* Принудительный перенос любых слов */
+    overflow-wrap: break-word; /* Перенос по словам если возможно */
+    white-space: normal; /* Разрешаем перенос строк */
+}
+
+.card p {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+/* Стили кнопок */
+.btn {
+    background: rgba(255, 255, 255, 0.9);
+    color: #6a11cb;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+/* Стили кнопок добавления карточки и списка */
+.add-card, .add-list{
+    width: 100%;
+    background: white; /* Чистый белый */
+    color: #6a11cb; /* Фиолетовый из вашего градиента */
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    font-weight: 500; /* Чуть жирнее текст */
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* Лёгкая тень */
+}
+
+.add-card:hover, .add-list:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+/* Модальное окно карточки */
+.card-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+    z-index: 2;
+}
+
+.modal-content {
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    width: 600px;
+    max-height: 80vh;
+    overflow-y: auto;
+    color: #333;
+}
+
+.modal-content textarea {
+    width: 95%;
+    height: 100px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.modal-actions {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.modal-actions .btn {
+    flex: 1;
+    background: #6a11cb;
+    color: #fff;
+}
+
+.close-modal {
+    width: 100%;
+    background: #ff4d4d;
+    color: #fff;
+    margin-top: 10px;
+}
+.close-modal:hover {
+    background: #ff4d4d;
+}
+
+.add-list {
+    width: 250px;
+    height: 40px;
+}
+
+.btn-login {
+    text-decoration: none;
+    padding: 12px 25px;
+    border-radius: 25px;
+    font-size: 1rem;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    background: #fff;
+    color: #6a11cb;
+    margin: 10px;
+}
+
+.btn-login:hover {
+    background: #f0f0f0;
+    transform: translateY(-2px);
+}
+
+/* Стили для неавторизованных пользователей */
+body.no_auth {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #6a11cb, #2575fc);
+    color: #fff;
+    text-align: center;
+}
+
+body.no_auth h1 {
+    font-size: 2rem;
+    margin-bottom: 40px;
+}
+
+.btn-logout {
+    width: 100%;
+    text-decoration: none;
+    padding: 8px;
+    background: #6a11cb;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* Стили для чек-листа внутри модального окна */
+.checklist {
+    margin-top: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.checklist-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    position: relative; /* Для позиционирования выпадающего меню */
+}
+
+.checklist-header h4 {
+    margin: 0;
+    color: #333;
+}
+
+.checklist-options {
+    cursor: pointer;
+    font-size: 16px;
+    color: #333;
+    position: relative; /* Для позиционирования выпадающего меню */
+}
+
+.checklist-options-menu {
+    display: none;
+    position: absolute;
+    right: 0; /* Позиционируем справа от троеточия */
+    top: 100%; /* Позиционируем ниже троеточия */
+    background: rgba(255, 255, 255, 0.9);
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+.checklist-options-menu button {
+    display: block;
+    width: 100%;
+    text-align: left;
+    background: none;
+    border: none;
+    color: #333;
+    cursor: pointer;
+}
+
+/* Стили для пунктов чек-листа */
+.checklist-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+    position: relative; /* Для позиционирования выпадающего меню */
+}
+
+.item-checkbox {
+    margin-right: 10px;
+}
+
+.item-text {
+    flex-grow: 1;
+    color: #333;
+}
+
+.item-dots {
+    cursor: pointer;
+    margin-left: 10px;
+    color: #333;
+    position: relative; /* Для позиционирования выпадающего меню */
+}
+
+.item-options-menu {
+    display: none;
+    position: absolute;
+    right: 0; /* Позиционируем справа от троеточия */
+    top: 100%; /* Позиционируем ниже троеточия */
+    background: rgba(255, 255, 255, 0.9);
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+.item-options-menu button {
+    display: block;
+    width: 100%;
+    text-align: left;
+    background: none;
+    border: none;
+    color: #333;
+    cursor: pointer;
+}
+
+.btn-save{
+    background: #6a11cb;
+    color: rgba(255, 255, 255, 0.9);
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    width: 100px;
+}
+
+.add-list-container,
+.add-card-container {
+    margin-top: 10px;
+}
+
+/* Контейнеры для форм добавления */
+.add-card-container,
+.add-checklist-container,
+.add-item-container{
+    position: sticky;
+    bottom: 0;
+    padding-top: 10px;
+    background: inherit; /* Сохраняет фон списка */
+    z-index: 1; /* Чтобы кнопка была поверх карточек */
+}
+
+/* Формы добавления элементов */
+.add-card-form,
+.add-list-form {
+    width: auto; /* Отменяем растягивание на всю ширину */
+    display: inline-flex;
+    flex-direction: column;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 10px;
+    border-radius: 10px;
+    pointer-events: auto; /* Разрешаем клики внутри формы */
+}
+
+
+.add-card-form input[type="text"],
+.add-card-form textarea,
+.add-list-form input[type="text"] {
+    width: 200px;
+    padding: 8px;
+    border: 2px solid #ddd;
+    border-radius: 4px;
+    font-family: 'Arial', sans-serif;
+    font-size: 14px;
+    color: #333;
+    outline: none;
+    transition: border-color 0.2s ease;
+    margin-bottom: 5px; /* Отступ от кнопок */
+    box-shadow: none; /* Убираем тень по умолчанию */
+}
+
+.add-card-form input[type="text"]:focus,
+.add-card-form textarea:focus,
+.add-list-form input[type="text"]:focus {
+    border-color: #6a11cb; /* Фиолетовый из вашего градиента */
+}
+
+.add-card-form input::placeholder,
+.add-card-form textarea::placeholder,
+.add-list-form input::placeholder {
+    color: #888;
+    opacity: 1; /* Фикс для Firefox */
+}
+
+/* Скрываем лейблы (если Django генерирует их) */
+.add-card-form label,
+.add-list-form label {
+    display: none;
+}
+
+
+.create-card,
+.create-list{
+    width: 90%;
+}
+
+.cancel-card,
+.cancel-list{
+    width: 10%;
+}
+
+
+.add-list-actions,
+.add-card-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.create-list,
+.create-card {
+  background: #6a11cb;
+  color: #fff;
+}
+
+.cancel-list,
+.cancel-card {
+  background: rgba(106, 17, 203, 0.7);
+  color: #fff;
+  padding: 8px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.cancel-list:hover,
+.cancel-card:hover {
+  background: rgba(106, 17, 203, 0.9);
+}
+
+.add-card-form, .add-list-form {
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.add-card-form[style*="none"],
+.add-list-form[style*="none"] {
+  opacity: 0;
+  transform: translateY(-10px);
+  pointer-events: none;
+}
+
+/* Стили для скроллбара (WebKit) */
+.cards-container::-webkit-scrollbar {
+    width: 8px;
+}
+
+.cards-container::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+}
+
+.cards-container::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 4px;
+}
+
+.cards-container::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.5);
+}
+
+

@@ -1,0 +1,91 @@
+body {
+  margin: 0;
+  font-family: 'Arial', sans-serif;
+  background: linear-gradient(135deg, #6a11cb, #2575fc);
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.container {
+  text-align: center;
+  max-width: 400px;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 15px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+}
+
+header h1 {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+}
+
+header .description {
+  font-size: 1.1rem;
+  color: #e0e0e0;
+  margin-bottom: 30px;
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+.btn {
+  text-decoration: none;
+  padding: 12px 25px;
+  border-radius: 25px;
+  font-size: 1rem;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.btn.login {
+  background: #fff;
+  color: #6a11cb;
+}
+
+.btn.register {
+  background: transparent;
+  border: 2px solid #fff;
+  color: #fff;
+}
+
+.btn.login:hover {
+  background: #f0f0f0;
+  transform: translateY(-2px);
+}
+
+.btn.register:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+}
+
+.input-form {
+ width: 300px;
+ height: 30px;
+ border:none;
+ border-radius: 10px;
+ margin: 7px;
+ border-color:rgba(255, 255, 255, 0.1);
+}
+
+.input-form:hover {
+  border-color: #6a11cb; /* Новый цвет границы */
+}
+
+/* Убираем стандартные стили браузера */
+.input-form:focus {
+  outline: none; /* Убираем стандартный outline */
+  border-color: #6a11cb; /* Цвет границы при фокусе */
+}
+
+label {
+  font-size: 16px; /* Размер текста */
+  margin-bottom: 8px; /* Отступ снизу */
+}

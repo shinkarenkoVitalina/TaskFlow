@@ -1,0 +1,12 @@
+{% extends 'main/base.html' %}
+
+{% block container %}
+<header>
+    <h1>To-Do List</h1>
+    <p class="description">Организуйте свои задачи легко и быстро. Наше приложение поможет вам сосредоточиться на главном.</p>
+</header>
+<div class="buttons">
+    <a href="{% url 'auth' %}" class="btn login">Войти</a>
+    <a href="{% url 'reg' %}" class="btn login">Зарегистрироваться</a>
+</div>
+{% endblock %}
