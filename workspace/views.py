@@ -17,8 +17,8 @@ def temp(request):
 
         list_form = forms.AddList
         card_form = forms.AddCard
-        cl_form = forms.AddCheckList
-        cl_card_form = forms.AddClCard
+        checklist_form = forms.AddCheckList
+        item_form = forms.AddClCard
 
         context = {'lists': lists,
                    'cards': cards,
@@ -27,8 +27,8 @@ def temp(request):
 
                    'lform': list_form,
                    'cardform': card_form,
-                   'clform': cl_form,
-                   'clcardform': cl_card_form
+                   'checklistform': checklist_form,
+                   'itemform': item_form
                    }
     else:
         # Если пользователь не авторизован - пустой контекст
@@ -63,7 +63,7 @@ model_mapping = {
     'list': models.List,
     'card': models.Card,
     'checklist': models.CheckList,
-    'checklist_item': models.CheckListCard
+    'item': models.CheckListCard
 }
 form_mapping = {
     'workspace': '',
@@ -71,7 +71,7 @@ form_mapping = {
     'list': forms.AddList,
     'card': forms.AddCard,
     'checklist': forms.AddCheckList,
-    'checklist_item': forms.AddClCard
+    'item': forms.AddClCard
 }
 
 def delete_el(request, el_type, el_id):

@@ -57,11 +57,28 @@
                                 </div>
                                 <div class="modal-actions">
                                     <button class="btn add-deadline"><i class="fas fa-calendar-alt"></i> Добавить дедлайн</button>
-                                    <button class="btn add-checklist-btn"> <i class="fas fa-check-square"></i> Добавить чек-лист </button>
+
                                     <form action="{% url 'delete_el' 'card' c.pk %}" method="post">
                                         {% csrf_token %}
                                         <button class="btn delete-card"><i class="fas fa-trash"></i> Удалить карточку</button>
                                     </form>
+
+                                    <button class="btn add-mark-btn"> Добавить метку </button>
+                                </div>
+
+                                <div class="add-checklist-container">
+                                    <button class="btn add-checklist" onclick="showForm(this, 'add-checklist-form', 'add-checklist', 'add-checklist-container')"> <i class="fas fa-check-square"></i> Добавить чек-лист</button>
+                                    <div class="add-checklist-form" style="display: none;">
+                                        <form action="{% url 'create_el' 'checklist' 'card' c.id %}" method="post">
+                                            {% csrf_token %}
+                                            {{ checklistform.as_p }}
+
+                                            <div class="add-checklist-actions">
+                                                <button class="btn create-checklist">Создать</button>
+                                                <button class="btn cancel-checklist" onclick="hideForm(this, 'add-checklist-form', 'add-checklist', 'add-checklist-container')"><i class="fas fa-times"></i></button>
+                                            </div>
+                                        </form>
+                                    </div>
                                 </div>
 
                                 <!-- Чек-лист внутри модального окна -->
@@ -107,7 +124,20 @@
                                     {% endfor %}
 
                                     <!-- Кнопка добавления пункта -->
-                                    <button class="btn add-checklist-item-btn" onclick="showForm(this, 'add-checklist-item-form', 'add-checklist-item-btn', 'add-checklist-item-container')">+ Добавить пункт</button>
+                                    <div class="add-item-container">
+                                    <button class="btn add-item" onclick="showForm(this, 'add-item-form', 'add-item', 'add-item-container')">+ Добавить элемент</button>
+                                    <div class="add-item-form" style="display: none;">
+                                        <form action="{% url 'create_el' 'item' 'checklist' cl.id %}" method="post">
+                                            {% csrf_token %}
+                                            {{ itemform.as_p }}
+
+                                            <div class="add-item-actions">
+                                                <button class="btn create-item">Создать</button>
+                                                <button class="btn cancel-item" onclick="hideForm(this, 'add-item-form', 'add-item', 'add-item-container')"><i class="fas fa-times"></i></button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    </div>
 
 
                                 </div>

@@ -14,13 +14,13 @@ class AddCard(forms.ModelForm):
         fields = ['title']
 
 class AddCheckList(forms.ModelForm):
-    title = forms.CharField(label='Название', widget=forms.TextInput(attrs={'class': 'add-card-input', 'placeholder': 'Введите название чек-листа...',}))
+    title = forms.CharField(label='Название', widget=forms.TextInput(attrs={'class': 'add-checklist-input', 'placeholder': 'Введите название чек-листа...',}))
     class Meta:
-        model = models.List
+        model = models.CheckList
         fields = ['title']
 
 class AddClCard(forms.ModelForm):
-    title = forms.CharField(label='Название', widget=forms.TextInput(attrs={'class': 'add-card-input', 'placeholder': 'Введите описание задачи...',}))
+    title = forms.CharField(label='Название', widget=forms.TextInput(attrs={'class': 'add-item_cl-input', 'placeholder': 'Введите описание задачи...',}))
     class Meta:
-        model = models.Card
+        model = models.CheckListCard
         fields = ['title']

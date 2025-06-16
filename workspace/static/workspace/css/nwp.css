@@ -158,7 +158,7 @@ body {
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* Лёгкая тень */
 }
 
-.add-card:hover, .add-list:hover {
+.add-card:hover, .add-list:hover, .add-checklist:hover, .add-item:hover {
     background: rgba(255, 255, 255, 0.3);
 }
 
@@ -376,14 +376,15 @@ body.no_auth h1 {
 }
 
 .add-list-container,
-.add-card-container {
+.add-card-container,
+.add-checklist-container,
+.add-item-container {
     margin-top: 10px;
 }
 
 /* Контейнеры для форм добавления */
 .add-card-container,
-.add-checklist-container,
-.add-item-container{
+{
     position: sticky;
     bottom: 0;
     padding-top: 10px;
@@ -393,7 +394,9 @@ body.no_auth h1 {
 
 /* Формы добавления элементов */
 .add-card-form,
-.add-list-form {
+.add-list-form,
+.add-checklist-form,
+.add-item-form {
     width: auto; /* Отменяем растягивание на всю ширину */
     display: inline-flex;
     flex-direction: column;
@@ -406,7 +409,11 @@ body.no_auth h1 {
 
 .add-card-form input[type="text"],
 .add-card-form textarea,
-.add-list-form input[type="text"] {
+.add-list-form input[type="text"],
+.add-checklist-form input[type="text"],
+.add-checklist-form textarea,
+.add-item-form input[type="text"],
+.add-item-form textarea{
     width: 200px;
     padding: 8px;
     border: 2px solid #ddd;
@@ -422,26 +429,36 @@ body.no_auth h1 {
 
 .add-card-form input[type="text"]:focus,
 .add-card-form textarea:focus,
-.add-list-form input[type="text"]:focus {
+.add-list-form input[type="text"]:focus
+.add-checklist-form input[type="text"]:focus,
+.add-checklist-form textarea:focus,
+.add-item-form input[type="text"]:focus,
+.add-item-form textarea:focus{
     border-color: #6a11cb; /* Фиолетовый из вашего градиента */
 }
 
 .add-card-form input::placeholder,
 .add-card-form textarea::placeholder,
-.add-list-form input::placeholder {
+.add-list-form input::placeholder,
+.add-checklist-form input::placeholder,
+.add-checklist-form textarea::placeholder,
+.add-item-form input::placeholder,
+.add-item-form textarea::placeholder{
     color: #888;
     opacity: 1; /* Фикс для Firefox */
 }
 
 /* Скрываем лейблы (если Django генерирует их) */
 .add-card-form label,
-.add-list-form label {
+.add-list-form label,
+.add-checklist-form label,
+.add-item-form label{
     display: none;
 }
 
 
 .create-card,
-.create-list{
+.create-list, {
     width: 90%;
 }
 
@@ -450,21 +467,35 @@ body.no_auth h1 {
     width: 10%;
 }
 
+.create-checklist {
+    width: 30%
+}
+
+.cancel-checklist {
+    width: 6%
+}
+
 
 .add-list-actions,
-.add-card-actions {
+.add-card-actions,
+.add-checklist-actions,
+.add-item-actions {
   display: flex;
   gap: 10px;
 }
 
 .create-list,
-.create-card {
+.create-card,
+.create-checklist,
+.create-item {
   background: #6a11cb;
   color: #fff;
 }
 
 .cancel-list,
-.cancel-card {
+.cancel-card,
+.cancel-checklist,
+.cancel-item {
   background: rgba(106, 17, 203, 0.7);
   color: #fff;
   padding: 8px;
@@ -473,16 +504,20 @@ body.no_auth h1 {
 }
 
 .cancel-list:hover,
-.cancel-card:hover {
+.cancel-card:hover,
+.cancel-checklist:hover,
+.cancel-item:hover {
   background: rgba(106, 17, 203, 0.9);
 }
 
-.add-card-form, .add-list-form {
+.add-card-form, .add-list-form, .add-checklist-form, .add-item-form {
   transition: opacity 0.2s ease, transform 0.2s ease;
 }
 
 .add-card-form[style*="none"],
-.add-list-form[style*="none"] {
+.add-list-form[style*="none"],
+.add-checklist-form[style*="none"],
+.add-item-form[style*="none"]{
   opacity: 0;
   transform: translateY(-10px);
   pointer-events: none;
@@ -508,3 +543,47 @@ body.no_auth h1 {
 }
 
 
+
+
+
+.add-checklist-container,
+.add-item-container
+{
+    position: sticky;
+    bottom: 0;
+    padding-top: 10px;
+    background: inherit; /* Сохраняет фон списка */
+    z-index: 30; /* Чтобы кнопка была поверх карточек */
+}
+
+/* Кнопка добавления чек-листа (основная) */
+.add-checklist {
+    background: #6a11cb;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin: 10px 0;
+}
+
+.add-checklist:hover {
+    background: #5a0db5;
+    transform: translateY(-1px);
+    box-shadow: 0 3px 6px rgba(0,0,0,0.15);
+}
+
+.add-checklist i {
+    font-size: 16px;
+}
+
+.add-item{
+    font-size: 16px;
+    padding-top: 0px;
+}
