@@ -13,6 +13,7 @@
 {% if request.user.is_authenticated %}
     <body>
         <div class="workspace">
+            <a class="btn-back-wp" href="{% url 'profile' %}" class="btn-logout"><i class="fas fa-arrow-left"></i>Вернуться</a>
             <!-- Настройки -->
             <div class="settings-icon" onclick="toggleSettings()">
                 <i class="fas fa-cog"></i> <!-- Иконка шестеренки -->
@@ -32,7 +33,7 @@
                             <i class="fas fa-ellipsis-h"></i>
                         </div>
                         <div class="list-options-menu">
-                            <form action="{% url 'delete_el' 'list' l.pk %}" method="post">
+                            <form action="{% url 'delete_el_desk' 'list' l.pk desk_id %}" method="post">
                                 {% csrf_token %}
                                 <button class="btn delete-list">Удалить Список</button>
                             </form>
@@ -58,7 +59,7 @@
                                 <div class="modal-actions">
                                     <button class="btn add-deadline"><i class="fas fa-calendar-alt"></i> Добавить дедлайн</button>
 
-                                    <form action="{% url 'delete_el' 'card' c.pk %}" method="post">
+                                    <form action="{% url 'delete_el_desk' 'card' c.pk desk_id %}" method="post">
                                         {% csrf_token %}
                                         <button class="btn delete-card"><i class="fas fa-trash"></i> Удалить карточку</button>
                                     </form>
@@ -69,7 +70,7 @@
                                 <div class="add-checklist-container">
                                     <button class="btn add-checklist" onclick="showForm(this, 'add-checklist-form', 'add-checklist', 'add-checklist-container')"> <i class="fas fa-check-square"></i> Добавить чек-лист</button>
                                     <div class="add-checklist-form" style="display: none;">
-                                        <form action="{% url 'create_el' 'checklist' 'card' c.id %}" method="post">
+                                        <form action="{% url 'create_el_desk' 'checklist' 'card' c.id desk_id %}" method="post">
                                             {% csrf_token %}
                                             {{ checklistform.as_p }}
 
@@ -93,7 +94,7 @@
                                         </div>
                                         <!-- Выпадающий список для удаления чек-листа -->
                                         <div class="checklist-options-menu">
-                                            <form action="{% url 'delete_el' 'checklist' cl.pk %}" method="post">
+                                            <form action="{% url 'delete_el_desk' 'checklist' cl.pk desk_id %}" method="post">
                                                 {% csrf_token %}
                                                 <button class="btn delete-checklist"><i class="fas fa-trash"></i> Удалить Чек-лист</button>
                                             </form>
@@ -113,7 +114,7 @@
                                             </div>
                                             <!-- Выпадающий список для удаления пункта -->
                                             <div class="item-options-menu">
-                                                <form action="{% url 'delete_el' 'checklist_item' el.pk %}" method="post">
+                                                <form action="{% url 'delete_el_desk' 'checklist_item' el.pk desk_id %}" method="post">
                                                     {% csrf_token %}
                                                     <button class="btn delete-checklist"><i class="fas fa-trash"></i> Удалить элемент</button>
                                                 </form>
@@ -127,7 +128,7 @@
                                     <div class="add-item-container">
                                     <button class="btn add-item" onclick="showForm(this, 'add-item-form', 'add-item', 'add-item-container')">+ Добавить элемент</button>
                                     <div class="add-item-form" style="display: none;">
-                                        <form action="{% url 'create_el' 'item' 'checklist' cl.id %}" method="post">
+                                        <form action="{% url 'create_el_desk' 'item' 'checklist' cl.id desk_id %}" method="post">
                                             {% csrf_token %}
                                             {{ itemform.as_p }}
 
@@ -155,7 +156,7 @@
                         <div class="add-card-container">
                             <button class="btn add-card" onclick="showForm(this, 'add-card-form', 'add-card', 'add-card-container')">+ Добавить карточку</button>
                             <div class="add-card-form" style="display: none;">
-                                <form action="{% url 'create_el' 'card' 'list' l.id %}" method="post">
+                                <form action="{% url 'create_el_desk' 'card' 'list' l.id desk_id %}" method="post">
                                     {% csrf_token %}
                                     {{ cardform.as_p }}
 
@@ -175,7 +176,7 @@
                 <div class="add-list-container">
                 <button class="btn add-list" onclick="showForm(this, 'add-list-form', 'add-list', 'add-list-container')">+ Добавить список</button>
                     <div class="add-list-form" style="display: none;">
-                        <form action="{% url 'create_list' %}" method="post">
+                        <form action="{% url 'create_el_desk' 'list' 'desk' desk_id desk_id %}" method="post">
                             {% csrf_token %}
                             {{ lform.as_p }}
 

@@ -1,6 +1,18 @@
 from django import forms
 from . import models
 
+class AddWorkSpace(forms.ModelForm):
+    title = forms.CharField(label='Название', widget=forms.TextInput(attrs={'class': 'add-wp-input', 'placeholder': 'Введите название рабочего пространства...',}))
+    class Meta:
+        model = models.WorkSpace
+        fields = ['title']
+
+class AddDesk(forms.ModelForm):
+    title = forms.CharField(label='Название', widget=forms.TextInput(attrs={'class': 'add-desk-input', 'placeholder': 'Введите название доски...',}))
+    class Meta:
+        model = models.Desk
+        fields = ['title']
+
 class AddList(forms.ModelForm):
     title = forms.CharField(label='Название', widget=forms.TextInput(attrs={'class': 'add-list-input', 'placeholder': 'Введите название списка...',}))
     class Meta:
@@ -24,3 +36,4 @@ class AddClCard(forms.ModelForm):
     class Meta:
         model = models.CheckListCard
         fields = ['title']
+

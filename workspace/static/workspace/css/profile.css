@@ -1,0 +1,413 @@
+/* Основные стили */
+body {
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+    display: flex;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #6a11cb, #2575fc);
+    color: #fff;
+}
+
+/* Сайдбар */
+.sidebar {
+    width: 240px;
+    background-color: rgba(0, 0, 0, 0.2);
+    color: white;
+    padding: 20px 0;
+    height: 100vh;
+    position: fixed;
+    box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+    backdrop-filter: blur(5px);
+}
+
+.user-info {
+    padding: 0 20px 20px;
+    border-bottom: 1px solid rgba(255,255,255,0.2);
+    margin-bottom: 20px;
+}
+
+.user-name {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.logout-btn {
+    background: rgba(255,255,255,0.1);
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    transition: background 0.2s;
+    text-decoration: none;
+    justify-content: center;
+}
+
+.logout-btn a{
+    text-decoration: none;
+    color: white;
+}
+
+.logout-btn:hover {
+    background: rgba(255,255,255,0.3);
+}
+
+/* Основное содержимое */
+.main-content {
+    flex: 1;
+    margin-left: 240px;
+    padding: 30px;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(5px);
+}
+
+/* Рабочие пространства */
+.workspace {
+    margin-bottom: 40px;
+}
+
+.workspace-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.workspace-title {
+    font-size: 20px;
+    font-weight: 600;
+    margin: 0;
+    color: #fff;
+}
+
+/* Доски */
+.boards-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.board-card {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 12px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    transition: all 0.2s;
+    cursor: pointer;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 500;
+    color: #fff;
+    text-decoration: none;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.board-card:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.add-board-card {
+    background-color: rgba(255, 255, 255, 0.05);
+    color: #fff;
+    border: 1px dashed rgba(255, 255, 255, 0.3);
+    font-size: 14px;
+}
+
+.add-board-card:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.5);
+}
+
+/* Разделитель */
+.divider {
+    border: none;
+    height: 1px;
+    background-color: rgba(255, 255, 255, 0.2);
+    margin: 30px 0;
+}
+
+/* Добавить рабочее пространство */
+.add-workspace-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    padding: 12px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: background 0.2s;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.add-workspace-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* Форма добавления */
+.add-form {
+    display: none;
+    background: rgba(0, 0, 0, 0.3);
+    padding: 16px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    margin-top: 10px;
+    width: 300px;
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.add-form input {
+    width: 90%;
+    padding: 8px 12px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 4px;
+    margin-bottom: 10px;
+    font-size: 14px;
+    background: rgba(0, 0, 0, 0.2);
+    color: #fff;
+}
+
+.add-form label{
+    display: none;
+}
+
+.add-form input::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.add-form-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.add-form-actions button {
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.2s;
+}
+
+.submit-btn {
+    background: #6a11cb;
+    color: white;
+    border: none;
+}
+
+.submit-btn:hover {
+    background: #5a0db5;
+}
+
+.cancel-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: #fff;
+}
+
+.cancel-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* Иконки */
+.fas {
+    color: #fff;
+}
+
+/* Стили для неавторизованных пользователей */
+body.no_auth {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #6a11cb, #2575fc);
+    color: #fff;
+    text-align: center;
+}
+
+body.no_auth h1 {
+    font-size: 2rem;
+    margin-bottom: 40px;
+}
+
+.buttons {
+    display: flex;
+    gap: 20px;
+}
+
+.btn {
+    text-decoration: none;
+    padding: 12px 25px;
+    border-radius: 25px;
+    font-size: 1rem;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    background: #fff;
+    color: #6a11cb;
+}
+
+.btn:hover {
+    background: #f0f0f0;
+    transform: translateY(-2px);
+}
+
+.add-form {
+    display: none;
+    /* остальные стили остаются такими же */
+}
+
+.add-form.visible {
+    display: block;
+}
+
+
+.workspace-options{
+    margin-left: 10px;
+}
+
+/* Стили для контейнера карточки */
+.board-card-container {
+    position: relative;
+    height: 80px; /* Фиксированная высота как у карточки */
+}
+
+/* Обновленные стили для карточки доски */
+.board-card {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 12px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    transition: all 0.2s;
+    cursor: pointer;
+    height: 100%; /* Занимает всю высоту контейнера */
+    display: flex;
+    flex-direction: column; /* Меняем направление flex */
+    position: relative;
+    text-decoration: none;
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.board-title {
+    flex-grow: 1; /* Занимает все доступное пространство */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    word-break: break-word;
+}
+
+/* Стили для троеточий в правом нижнем углу */
+.board-options {
+    cursor: pointer;
+    font-size: 16px;
+    color: rgba(255, 255, 255, 0.7);
+    transition: color 0.2s;
+    position: absolute; /* Абсолютное позиционирование */
+    right: 8px;
+    bottom: 8px;
+    padding: 4px;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.board-options:hover {
+    color: white;
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Стили для выпадающего меню */
+.board-options-menu {
+    display: none;
+    position: absolute;
+    right: 10px;
+    bottom: -10px; /* Позиционируем снизу */
+    transform: translateY(100%); /* Сдвигаем вниз на 100% высоты */
+    background: rgba(255, 255, 255, 0.9);
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    z-index: 10;
+    color: #333;
+    min-width: 100px;
+}
+
+/* Анимация для меню */
+.board-options-menu {
+    opacity: 0;
+    transform: translateY(calc(100% - 10px));
+    transition: opacity 0.2s, transform 0.2s;
+}
+
+.board-options-menu[style*="block"] {
+    opacity: 1;
+    transform: translateY(100%);
+}
+/* Стили для троеточий и меню в заголовке рабочего пространства */
+.workspace-header {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.workspace-options {
+    cursor: pointer;
+    font-size: 18px;
+    color: rgba(255, 255, 255, 0.7);
+    transition: color 0.2s;
+    padding: 5px;
+    margin-left: auto; /* Сдвигаем троеточие вправо */
+}
+
+.workspace-options:hover {
+    color: white;
+}
+
+.workspace-options-menu {
+    display: none; /* По умолчанию скрыто */
+    position: absolute;
+    right: 0;
+    top: calc(100% + 5px);
+    background: rgba(255, 255, 255, 0.9);
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    z-index: 1000; /* Поверх всех элементов */
+    min-width: 100px;
+    transform: translateY(-10px);
+    opacity: 0;
+    transition: opacity 0.2s, transform 0.2s;
+}
+
+.workspace-options-menu[style*="block"] {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.workspace-options-menu button,
+.board-options-menu button{
+    font-size: 13px;
+    padding: 5px 9px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}

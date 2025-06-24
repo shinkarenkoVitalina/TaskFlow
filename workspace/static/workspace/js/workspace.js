@@ -4,17 +4,20 @@ function toggleSettings() {
     settingsCard.classList.toggle('active');
 }
 
-// Переключение выпадающих меню
 function toggleOptions(element, menuClass) {
-    const options = element.nextElementSibling;
-    options.style.display = options.style.display === 'block' ? 'none' : 'block';
-
-    // Закрываем другие открытые меню того же типа
+    // Закрываем все открытые меню того же типа
     document.querySelectorAll(menuClass).forEach(menu => {
-        if (menu !== options && menu.style.display === 'block') {
+        if (menu !== element.nextElementSibling) {
             menu.style.display = 'none';
         }
     });
+
+    // Переключаем текущее меню
+    const options = element.nextElementSibling;
+    options.style.display = options.style.display === 'block' ? 'none' : 'block';
+
+    // Останавливаем всплытие события, чтобы не сработал document.click
+    event.stopPropagation();
 }
 
 // Обработчик кликов для закрытия меню при клике вне их
@@ -23,13 +26,15 @@ document.addEventListener('click', (event) => {
     const menuTypes = [
         { trigger: '.list-options', menu: '.list-options-menu' },
         { trigger: '.checklist-options', menu: '.checklist-options-menu' },
-        { trigger: '.item-dots', menu: '.item-options-menu' }
+        { trigger: '.item-dots', menu: '.item-options-menu' },
+        { trigger: '.workspace-options', menu: '.workspace-options-menu' },
+        { trigger: '.board-options', menu: '.board-options-menu' }
     ];
 
     // Для каждого типа меню проверяем, нужно ли его закрыть
     menuTypes.forEach(({ trigger, menu }) => {
-            if (!event.target.closest(trigger) && !event.target.closest(menu)) {
-                document.querySelectorAll(menu).forEach(menuElement => {
+        if (!event.target.closest(trigger) && !event.target.closest(menu)) {
+            document.querySelectorAll(menu).forEach(menuElement => {
                 menuElement.style.display = 'none';
             });
         }
