@@ -27,7 +27,25 @@
         {% for wp in workspaces %}
         <div class="workspace">
             <div class="workspace-header">
-                <h2 class="workspace-title"> {{ wp.title }}</h2>
+                <div class="title-view">
+                    <h2 class="workspace-title">{{ wp.title }}</h2>
+                    <button class="btn-edit" onclick="enableEdit(this, 'workspace', {{ wp.id }})">
+                        <i class="fas fa-pencil-alt"></i>
+                    </button>
+                </div>
+                <div class="title-edit" style="display: none;">
+                    <input type="text" class="form-control edit-input" value="{{ wp.title }}">
+                    <div class="edit-actions">
+                        <button class="btn btn-success btn-sm btn-save"
+                                onclick="saveTitle(this, 'workspace', {{ wp.id }})">
+                            Сохранить
+                        </button>
+                        <button class="btn btn-outline-secondary btn-sm btn-cancel"
+                                onclick="cancelEdit(this, 'workspace')">
+                            Отмена
+                        </button>
+                    </div>
+                </div>
             <div class="workspace-options" onclick="toggleOptions(this, '.workspace-options-menu')">
                 <i class="fas fa-ellipsis-h"></i>
             </div>
@@ -47,17 +65,17 @@
                 <div class="board-card-container">
                     <a href="{% url 'desk' desk.id %}" class="board-card">
                         <span class="board-title">{{ desk.title }}</span>
-                        <div class="board-options" onclick="toggleOptions(this, '.board-options-menu')">
-                            <i class="fas fa-ellipsis-h"></i>
-                        </div>
-                        <div class="board-options-menu">
+                    </a>
+                    <div class="board-options" onclick="toggleOptions(this, '.board-options-menu')">
+                        <i class="fas fa-ellipsis-h"></i>
+                    </div>
+                    <div class="board-options-menu">
                             <form action="{% url 'delete_el' 'desk' desk.pk %}" method="post">
                                 {% csrf_token %}
                                 <button class="btn delete-board">Удалить доску</button>
                             </form>
                             <button class="btn update-desc-board">Обновить описание</button>
-                        </div>
-                    </a>
+                    </div>
                 </div>
 
                 {% endif %}

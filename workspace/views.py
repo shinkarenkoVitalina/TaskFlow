@@ -1,8 +1,69 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
+from django.views.decorators.http import require_POST
+from django.views.decorators.csrf import csrf_exempt
+import json
+from rest_framework import viewsets
+from rest_framework import permissions
+from rest_framework.decorators import action
+from rest_framework.response import Response
+
 from . import models
 from . import forms
+from . import serializers
+
+class WorkSpaceViewSet(viewsets.ModelViewSet):
+    permission_classes = [permissions.IsAuthenticated]
+    queryset = models.WorkSpace.objects.all()
+    serializer_class = serializers.WorkSpaceSerializer
+
+    def get_queryset(self):
+        return models.WorkSpace.objects.filter(owner=self.request.user)
+
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)
+
+class DeskViewSet(viewsets.ModelViewSet):
+    queryset = models.Desk.objects.all()
+    serializer_class = serializers.DeskSerializer
+
+class ListViewSet(viewsets.ModelViewSet):
+    queryset = models.List.objects.all()
+    serializer_class = serializers.ListSerializer
+
+
+class CardViewSet(viewsets.ModelViewSet):
+    queryset = models.Card.objects.all()
+    serializer_class = serializers.CardSerializer
+
+    @action(detail=True, methods=['post'])
+    def set_deadline(self, request, pk=None):
+        card = self.get_object()
+        deadline = request.data.get('deadline')
+
+        if deadline:
+            try:
+                card.deadline = deadline
+                card.save()
+                return Response({'status': 'deadline set'})
+            except Exception as e:
+                return Response({'error': str(e)}, status=400)
+        else:
+            card.deadline = None
+            card.save()
+            return Response({'status': 'deadline removed'})
+
+class CheckListViewSet(viewsets.ModelViewSet):
+    queryset = models.CheckList.objects.all()
+    serializer_class = serializers.CheckListSerializer
+
+class CheckListCardViewSet(viewsets.ModelViewSet):
+    queryset = models.CheckListCard.objects.all()
+    serializer_class = serializers.CheckListCardSerializer
+
+
 
 
 @login_required
@@ -25,6 +86,7 @@ def desk_view(request, desk_id):
         Отображает все списки, карточки, чек-листы и их пункты для авторизованного пользователя.
         """
     if request.user.is_authenticated:
+        desk_title = models.Desk.objects.get(id=desk_id).title
         lists = models.List.objects.filter(parent_id=desk_id)
         cards = models.Card.objects.filter(parent__in=lists)
         checklists = models.CheckList.objects.filter(parent__in=cards)
@@ -45,12 +107,32 @@ def desk_view(request, desk_id):
                    'checklistform': checklist_form,
                    'itemform': item_form,
 
-                   'desk_id': desk_id
+                   'desk_id': desk_id,
+                   'desk_title': desk_title,
                    }
     else:
-        # Если пользователь не авторизован - пустой контекст
         context = {}
     return render(request, 'workspace/nwp.html', context)
+
+
+def update_deadline(request, card_id):
+    try:
+        data = json.loads(request.body)
+        deadline_str = data.get('deadline')
+
+        card = Card.objects.get(id=card_id)
+        if deadline_str:
+            from django.utils.dateparse import parse_datetime
+            deadline = parse_datetime(deadline_str)
+            card.deadline = deadline
+            card.save()
+            return JsonResponse({'status': 'success'})
+        else:
+            card.deadline = None
+            card.save()
+            return JsonResponse({'status': 'success'})
+    except Exception as e:
+        return JsonResponse({'status': 'error', 'message': str(e)})
 
 
 def logout_user(request):

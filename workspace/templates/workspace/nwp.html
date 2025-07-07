@@ -15,6 +15,7 @@
         <div class="workspace">
             <a class="btn-back-wp" href="{% url 'profile' %}" class="btn-logout"><i class="fas fa-arrow-left"></i>Вернуться</a>
             <!-- Настройки -->
+
             <div class="settings-icon" onclick="toggleSettings()">
                 <i class="fas fa-cog"></i> <!-- Иконка шестеренки -->
             </div>
@@ -57,7 +58,19 @@
                                     <button class="btn-save"> Сохранить </button>
                                 </div>
                                 <div class="modal-actions">
-                                    <button class="btn add-deadline"><i class="fas fa-calendar-alt"></i> Добавить дедлайн</button>
+                                    <button class="btn add-deadline" onclick="openDeadlineModal({{ c.id }})">
+                                        <i class="fas fa-calendar-alt"></i> Добавить дедлайн
+                                    </button>
+                                    <div class="deadline-modal" id="deadline-modal-{{ c.id }}" style="display: none;">
+                                        <div class="deadline-content">
+                                            <h4>Установить дедлайн</h4>
+                                            <input type="datetime-local" id="deadline-input-{{ c.id }}" class="deadline-input">
+                                            <div class="deadline-actions">
+                                                <button class="btn save-deadline" onclick="saveDeadline({{ c.id }}, {{ desk_id }})">Сохранить</button>
+                                                <button class="btn cancel-deadline" onclick="closeDeadlineModal('deadline-modal-{{ c.id }}')">Отмена</button>
+                                            </div>
+                                        </div>
+                                    </div>
 
                                     <form action="{% url 'delete_el_desk' 'card' c.pk desk_id %}" method="post">
                                         {% csrf_token %}

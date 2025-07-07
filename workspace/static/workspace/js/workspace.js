@@ -98,3 +98,73 @@ document.addEventListener('click', function(event) {
         }
     }
 });
+
+
+// Функция открывающая модальное окна дедлайна
+function openDeadlineModal(cardId) {
+    const modalId = `deadline-modal-${cardId}`;
+    const modal = document.getElementById(modalId);
+    // Создаем объект Date с текущей датой и временем
+    const now = new Date();
+    // Форматируем дату и время
+    const formattedDate = now.toISOString().slice(0, 16);
+    // Устанавливаем значение поля ввода в текущую дату и время(предварительно отформатированные)
+    document.getElementById(`deadline-input-${cardId}`).value = formattedDate;
+    // Делаем модальное окно видимым
+    modal.style.display = 'flex';
+}
+
+// Закрытие модального окна дедлайна
+function closeDeadlineModal(modalId) {
+    document.getElementById(modalId).style.display = 'none';
+}
+
+// Cохранение дедлайна
+function saveDeadline(cardId, deskId) {
+    const deadlineInput = document.getElementById(`deadline-input-${cardId}`);
+    const deadlineValue = deadlineInput.value;
+
+    // Отправка данных на сервер через REST API
+    fetch(`/api/cards/${cardId}/set_deadline/`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': getCookie('csrftoken'),
+            'X-Requested-With': 'XMLHttpRequest'
+        },
+        body: JSON.stringify({
+            deadline: deadlineValue
+        }),
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        closeDeadlineModal(`deadline-modal-${cardId}`);
+        console.log('Deadline updated:', data);
+        location.reload();
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Ошибка при сохранении дедлайна');
+    });
+}
+
+// Получение CSRF токена
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}

@@ -14,16 +14,16 @@ def mainpage(request):
 class RegisterUser(CreateView):
     form_class = forms.RegisterUserForm
     template_name = 'main/reg_user.html'
-    success_url = reverse_lazy('workspace')
+    success_url = reverse_lazy('profile')
 
     def form_valid(self, form):
         user = form.save()
         login(self.request, user)
-        return redirect('workspace')
+        return redirect('profile')
 
 class LoginUser(LoginView):
     form_class = forms.UserAuthForm
     template_name = 'main/aut_user.html'
 
     def get_success_url(self):
-        return reverse_lazy('workspace')
+        return reverse_lazy('profile')

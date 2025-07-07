@@ -33,3 +33,87 @@ document.querySelectorAll('.cancel-btn').forEach(btn => {
         this.closest('.add-form').classList.remove('visible');
     });
 });
+
+
+// Включение режима редактирования
+function enableEdit(button, type, id) {
+    const container = button.closest('.title-view').parentNode;
+    const viewMode = container.querySelector('.title-view');
+    const editMode = container.querySelector('.title-edit');
+    const input = editMode.querySelector('.edit-input');
+
+    // Сохраняем оригинальное значение
+    input.dataset.original = input.value;
+
+    // Переключаем режимы
+    viewMode.style.display = 'none';
+    editMode.style.display = 'block';
+
+    // Фокусируем и выделяем текст в инпуте
+    input.focus();
+    input.select();
+
+    // Обработка нажатия Enter
+    input.onkeydown = function(e) {
+        if (e.key === 'Enter') {
+            saveTitle(button, type, id);
+        } else if (e.key === 'Escape') {
+            cancelEdit(button, type);
+        }
+    };
+}
+
+// Сохранение изменений
+async function saveTitle(button, type, id) {
+    const container = button.closest('.title-edit').parentNode;
+    const input = container.querySelector('.edit-input');
+    const newTitle = input.value.trim();
+
+    if (newTitle === '') {
+        alert('Название не может быть пустым');
+        return;
+    }
+
+    try {
+        const response = await fetch(`/api/${type}s/${id}/`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': getCookie('csrftoken'),
+            },
+            body: JSON.stringify({ title: newTitle }),
+        });
+
+        if (response.ok) {
+            const viewMode = container.querySelector('.title-view');
+            const editMode = container.querySelector('.title-edit');
+            const titleElement = viewMode.querySelector(`.${type}-title`);
+
+            // Обновляем отображаемое название
+            titleElement.textContent = newTitle;
+
+            // Возвращаем в режим просмотра
+            viewMode.style.display = 'flex';
+            editMode.style.display = 'none';
+        } else {
+            throw new Error('Ошибка сохранения');
+        }
+    } catch (error) {
+        alert('Не удалось сохранить изменения: ' + error.message);
+    }
+}
+
+// Отмена редактирования
+function cancelEdit(button, type) {
+    const container = button.closest('.title-edit').parentNode;
+    const viewMode = container.querySelector('.title-view');
+    const editMode = container.querySelector('.title-edit');
+    const input = editMode.querySelector('.edit-input');
+
+    // Восстанавливаем оригинальное значение
+    input.value = input.dataset.original;
+
+    // Возвращаем в режим просмотра
+    viewMode.style.display = 'flex';
+    editMode.style.display = 'none';
+}

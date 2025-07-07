@@ -286,18 +286,17 @@ body.no_auth h1 {
     height: 80px; /* Фиксированная высота как у карточки */
 }
 
-/* Обновленные стили для карточки доски */
 .board-card {
+    position: relative;
     background-color: rgba(255, 255, 255, 0.1);
     border-radius: 8px;
     padding: 12px;
     box-shadow: 0 1px 3px rgba(0,0,0,0.1);
     transition: all 0.2s;
     cursor: pointer;
-    height: 100%; /* Занимает всю высоту контейнера */
+    height: 100%;
     display: flex;
-    flex-direction: column; /* Меняем направление flex */
-    position: relative;
+    flex-direction: column;
     text-decoration: none;
     color: #fff;
     border: 1px solid rgba(255, 255, 255, 0.2);
@@ -312,15 +311,15 @@ body.no_auth h1 {
     word-break: break-word;
 }
 
-/* Стили для троеточий в правом нижнем углу */
 .board-options {
+    position: absolute;
+    right: 8px;
+    bottom: 8px;
+    top: 60px;
     cursor: pointer;
     font-size: 16px;
     color: rgba(255, 255, 255, 0.7);
-    transition: color 0.2s;
-    position: absolute; /* Абсолютное позиционирование */
-    right: 8px;
-    bottom: 8px;
+    transition: all 0.2s;
     padding: 4px;
     border-radius: 50%;
     width: 24px;
@@ -335,12 +334,13 @@ body.no_auth h1 {
     background-color: rgba(255, 255, 255, 0.2);
 }
 
+
 /* Стили для выпадающего меню */
 .board-options-menu {
     display: none;
     position: absolute;
     right: 10px;
-    bottom: -10px; /* Позиционируем снизу */
+    bottom: -30px; /* Позиционируем снизу */
     transform: translateY(100%); /* Сдвигаем вниз на 100% высоты */
     background: rgba(255, 255, 255, 0.9);
     padding: 10px;
@@ -410,4 +410,49 @@ body.no_auth h1 {
     padding: 5px 9px;
     margin-top: 5px;
     margin-bottom: 5px;
+}
+
+
+/* Стили для режима просмотра */
+.title-view {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.btn-edit {
+    margin-left: 8px;
+    opacity: 0;
+    transition: opacity 0.2s;
+    background: none;
+    border: none;
+    color: #666;
+}
+
+.title-view:hover .btn-edit {
+    opacity: 1;
+}
+
+/* Стили для режима редактирования */
+.title-edit {
+    margin-top: 5px;
+}
+
+.edit-input {
+    width: 100%;
+    padding: 5px;
+    font-size: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+}
+
+.edit-actions {
+    margin-top: 5px;
+    display: flex;
+    gap: 5px;
+}
+
+.btn-save, .btn-cancel {
+    padding: 3px 8px;
+    font-size: 0.8rem;
 }
