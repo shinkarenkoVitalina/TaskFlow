@@ -47,12 +47,27 @@
                         {% if c.parent_id == l.id %}
                         <div class="card" onclick="openCardModal('modal-{{ c.id }}')">
                             <p>{{ c.title }}</p>
+                            {% if c.deadline %}
+                                <div class="card-deadline {% if c.is_overdue %}overdue{% endif %}">
+                                    <i class="fas fa-clock"></i> {{ c.deadline|date:"d.m.Y H:i" }}
+                                </div>
+                            {% endif %}
                         </div>
 
                         <!-- Модальное окно карточки -->
                         <div class="card-modal" id="modal-{{ c.id }}">
                             <div class="modal-content">
                                 <h3>{{ c.title }}</h3>
+
+                                {% if c.deadline %}
+                                <div class="deadline-info {% if c.is_overdue %}overdue{% endif %}">
+                                    <i class="fas fa-clock"></i>
+                                    <span class="deadline-info-text">
+                                        Дедлайн: {{ c.deadline|date:"d.m.Y H:i" }}
+                                    </span>
+                                </div>
+                                {% endif %}
+
                                 <textarea placeholder="Добавьте описание..."></textarea>
                                 <div class="modal-actions">
                                     <button class="btn-save"> Сохранить </button>
