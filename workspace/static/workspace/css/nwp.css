@@ -601,6 +601,7 @@ a.btn-back-wp i{
     margin-right: 5px;
 }
 
+
 /* Стили для модального окна дедлайна */
 .deadline-modal {
     position: fixed;
@@ -648,4 +649,122 @@ a.btn-back-wp i{
     background: #ff4d4d;
     color: white;
     margin-left: 5px;
+}
+
+div.card-deadline {
+    margin-top: 5px;
+}
+
+/* Стили для дедлайна карточки */
+.card-deadline {
+    display: inline-block;
+    margin-top: 8px;
+    padding: 4px 8px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.15);
+    font-size: 12px;
+    color: #fff;
+}
+
+/* Стиль для просроченного дедлайна */
+.card-deadline.overdue {
+    color: #ffcccc;
+}
+
+/* Стили для дедлайна в модальном окне */
+.deadline-info {
+    margin: 10px 0;
+    padding: 8px 12px;
+    background: rgba(106, 17, 203, 0.1);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.deadline-info i {
+    color: #6a11cb;
+}
+
+.deadline-info-text {
+    font-size: 14px;
+    color: #333;
+}
+
+.deadline-info.overdue {
+    background: rgba(255, 50, 50, 0.1);
+}
+
+.deadline-info.overdue i,
+.deadline-info.overdue .deadline-info-text {
+    color: #ff4d4d;
+}
+
+
+/* Стили для inline-редактирования */
+.title-view {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.btn-edit,
+.btn-edit-list {
+    margin-left: 8px;
+    opacity: 0;
+    transition: opacity 0.2s;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-edit-list {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.btn-edit {
+    color: #6a11cb;
+}
+
+.title-view:hover .btn-edit,
+.title-view:hover .btn-edit-list {
+    opacity: 1;
+}
+
+
+.title-edit {
+    display: none;
+    margin-bottom: 10px;
+}
+
+.edit-input {
+    width: 90%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: inherit;
+    margin-bottom: 5px;
+}
+
+.edit-actions {
+    display: flex;
+    gap: 5px;
+}
+
+.btn-save, .btn-cancel {
+    padding: 4px 8px;
+    font-size: 12px;
+    border-radius: 3px;
+}
+
+.btn-save {
+    background: #6a11cb;
+    color: white;
+    border: none;
+}
+
+.btn-cancel {
+    background: #f0f0f0;
+    color: #333;
+    border: 1px solid #ddd;
 }

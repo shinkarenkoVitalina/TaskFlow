@@ -29,7 +29,21 @@
                 {% for l in lists %}
                 <div class="list">
                     <div class="list-header">
-                        <h3>{{ l.title }}</h3>
+
+                        <div class="title-view">
+                            <h3>{{ l.title }}</h3>
+                            <button class="btn-edit-list" onclick="enableEdit(this, 'list', {{ l.id }})">
+                                <i class="fas fa-pencil-alt"></i>
+                            </button>
+                        </div>
+                        <div class="title-edit" style="display: none;">
+                            <input type="text" class="edit-input" value="{{ l.title }}">
+                            <div class="edit-actions">
+                                <button class="btn-save" onclick="saveTitle(this, 'list', {{ l.id }})">Сохранить</button>
+                                <button class="btn-cancel" onclick="cancelEdit(this, 'list')">Отмена</button>
+                            </div>
+                        </div>
+
                         <div class="list-options" onclick="toggleOptions(this, '.list-options-menu')">
                             <i class="fas fa-ellipsis-h"></i>
                         </div>
@@ -57,7 +71,21 @@
                         <!-- Модальное окно карточки -->
                         <div class="card-modal" id="modal-{{ c.id }}">
                             <div class="modal-content">
-                                <h3>{{ c.title }}</h3>
+
+
+                                <div class="title-view">
+                                    <h3>{{ c.title }}</h3>
+                                    <button class="btn-edit" onclick="enableEdit(this, 'card', {{ c.id }})">
+                                        <i class="fas fa-pencil-alt"></i>
+                                    </button>
+                                </div>
+                                <div class="title-edit" style="display: none;">
+                                    <input type="text" class="edit-input" value="{{ c.title }}">
+                                    <div class="edit-actions">
+                                        <button class="btn-save" onclick="saveTitle(this, 'card', {{ c.id }})">Сохранить</button>
+                                        <button class="btn-cancel" onclick="cancelEdit(this, 'card')">Отмена</button>
+                                    </div>
+                                </div>
 
                                 {% if c.deadline %}
                                 <div class="deadline-info {% if c.is_overdue %}overdue{% endif %}">
@@ -116,7 +144,21 @@
                                 <div class="checklist">
                                     <!-- Заголовок чек-листа с меню -->
                                     <div class="checklist-header">
-                                        <h4>{{ cl.title }}</h4>
+
+                                        <div class="title-view">
+                                            <h4>{{ cl.title }}</h4>
+                                            <button class="btn-edit" onclick="enableEdit(this, 'checklist', {{ cl.id }})">
+                                                <i class="fas fa-pencil-alt"></i>
+                                            </button>
+                                        </div>
+                                        <div class="title-edit" style="display: none;">
+                                            <input type="text" class="edit-input" value="{{ cl.title }}">
+                                            <div class="edit-actions">
+                                                <button class="btn-save" onclick="saveTitle(this, 'checklist', {{ cl.id }})">Сохранить</button>
+                                                <button class="btn-cancel" onclick="cancelEdit(this, 'checklist')">Отмена</button>
+                                            </div>
+                                        </div>
+
                                         <div class="checklist-options" onclick="toggleOptions(this, '.checklist-options-menu')">
                                             <i class="fas fa-ellipsis-h"></i>
                                         </div>
@@ -135,7 +177,19 @@
                                     <div class="checklist-items">
                                         <div class="checklist-item">
                                             <input type="checkbox" class="item-checkbox">
-                                            <span class="item-text">{{ el.title }}</span>
+                                            <div class="title-view">
+                                                <span class="item-text">{{ el.title }}</span>
+                                                <button class="btn-edit" onclick="enableEdit(this, 'checklistitem', {{ el.id }})">
+                                                    <i class="fas fa-pencil-alt"></i>
+                                                </button>
+                                            </div>
+                                            <div class="title-edit" style="display: none;">
+                                                <input type="text" class="edit-input" value="{{ el.title }}">
+                                                <div class="edit-actions">
+                                                    <button class="btn-save" onclick="saveTitle(this, 'checklistitem', {{ el.id }})">Сохранить</button>
+                                                    <button class="btn-cancel" onclick="cancelEdit(this, 'checklistitem')">Отмена</button>
+                                                </div>
+                                            </div>
                                             <!-- Меню пункта -->
                                             <div class="item-dots" onclick="toggleOptions(this, '.item-options-menu')">
                                                 <i class="fas fa-ellipsis-h"></i>
