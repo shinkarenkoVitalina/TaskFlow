@@ -24,6 +24,20 @@
                 <a href="{% url 'mainpage' %}" class="btn-logout">Выйти</a>
             </div>
 
+            <div class="title-view" data-edit-type="desk-title">
+                <h3 class="desk-title">{{ desk.title }}</h3>
+                <button class="btn-edit-list" onclick="enableEdit(this, 'desk', {{ desk.id }})">
+                    <i class="desk-title-edit-btn fas fa-pencil-alt"></i>
+                </button>
+            </div>
+            <div class="title-edit" style="display: none;">
+                <input type="text" class="desk-edit-input edit-input" value="{{ desk.title }}">
+                <div class="edit-actions">
+                    <button class="desk-title-save btn-save" onclick="saveTitle(this, 'desk', {{ desk.id }})">Сохранить</button>
+                    <button class="desk-title-cancel btn-cancel" onclick="cancelEdit(this, 'desk')">Отмена</button>
+                </div>
+            </div>
+
             <!-- Контейнер для списков -->
             <div class="lists-container">
                 {% for l in lists %}
@@ -48,7 +62,7 @@
                             <i class="fas fa-ellipsis-h"></i>
                         </div>
                         <div class="list-options-menu">
-                            <form action="{% url 'delete_el_desk' 'list' l.pk desk_id %}" method="post">
+                            <form action="{% url 'delete_el_desk' 'list' l.pk desk.id %}" method="post">
                                 {% csrf_token %}
                                 <button class="btn delete-list">Удалить Список</button>
                             </form>
@@ -109,13 +123,13 @@
                                             <h4>Установить дедлайн</h4>
                                             <input type="datetime-local" id="deadline-input-{{ c.id }}" class="deadline-input">
                                             <div class="deadline-actions">
-                                                <button class="btn save-deadline" onclick="saveDeadline({{ c.id }}, {{ desk_id }})">Сохранить</button>
+                                                <button class="btn save-deadline" onclick="saveDeadline({{ c.id }}, {{ desk.id }})">Сохранить</button>
                                                 <button class="btn cancel-deadline" onclick="closeDeadlineModal('deadline-modal-{{ c.id }}')">Отмена</button>
                                             </div>
                                         </div>
                                     </div>
 
-                                    <form action="{% url 'delete_el_desk' 'card' c.pk desk_id %}" method="post">
+                                    <form action="{% url 'delete_el_desk' 'card' c.pk desk.id %}" method="post">
                                         {% csrf_token %}
                                         <button class="btn delete-card"><i class="fas fa-trash"></i> Удалить карточку</button>
                                     </form>
@@ -126,7 +140,7 @@
                                 <div class="add-checklist-container">
                                     <button class="btn add-checklist" onclick="showForm(this, 'add-checklist-form', 'add-checklist', 'add-checklist-container')"> <i class="fas fa-check-square"></i> Добавить чек-лист</button>
                                     <div class="add-checklist-form" style="display: none;">
-                                        <form action="{% url 'create_el_desk' 'checklist' 'card' c.id desk_id %}" method="post">
+                                        <form action="{% url 'create_el_desk' 'checklist' 'card' c.id desk.id %}" method="post">
                                             {% csrf_token %}
                                             {{ checklistform.as_p }}
 
@@ -164,7 +178,7 @@
                                         </div>
                                         <!-- Выпадающий список для удаления чек-листа -->
                                         <div class="checklist-options-menu">
-                                            <form action="{% url 'delete_el_desk' 'checklist' cl.pk desk_id %}" method="post">
+                                            <form action="{% url 'delete_el_desk' 'checklist' cl.pk desk.id %}" method="post">
                                                 {% csrf_token %}
                                                 <button class="btn delete-checklist"><i class="fas fa-trash"></i> Удалить Чек-лист</button>
                                             </form>
@@ -196,7 +210,7 @@
                                             </div>
                                             <!-- Выпадающий список для удаления пункта -->
                                             <div class="item-options-menu">
-                                                <form action="{% url 'delete_el_desk' 'checklist_item' el.pk desk_id %}" method="post">
+                                                <form action="{% url 'delete_el_desk' 'checklist_item' el.pk desk.id %}" method="post">
                                                     {% csrf_token %}
                                                     <button class="btn delete-checklist"><i class="fas fa-trash"></i> Удалить элемент</button>
                                                 </form>
@@ -210,7 +224,7 @@
                                     <div class="add-item-container">
                                     <button class="btn add-item" onclick="showForm(this, 'add-item-form', 'add-item', 'add-item-container')">+ Добавить элемент</button>
                                     <div class="add-item-form" style="display: none;">
-                                        <form action="{% url 'create_el_desk' 'item' 'checklist' cl.id desk_id %}" method="post">
+                                        <form action="{% url 'create_el_desk' 'item' 'checklist' cl.id desk.id %}" method="post">
                                             {% csrf_token %}
                                             {{ itemform.as_p }}
 
@@ -238,7 +252,7 @@
                         <div class="add-card-container">
                             <button class="btn add-card" onclick="showForm(this, 'add-card-form', 'add-card', 'add-card-container')">+ Добавить карточку</button>
                             <div class="add-card-form" style="display: none;">
-                                <form action="{% url 'create_el_desk' 'card' 'list' l.id desk_id %}" method="post">
+                                <form action="{% url 'create_el_desk' 'card' 'list' l.id desk.id %}" method="post">
                                     {% csrf_token %}
                                     {{ cardform.as_p }}
 
@@ -258,7 +272,7 @@
                 <div class="add-list-container">
                 <button class="btn add-list" onclick="showForm(this, 'add-list-form', 'add-list', 'add-list-container')">+ Добавить список</button>
                     <div class="add-list-form" style="display: none;">
-                        <form action="{% url 'create_el_desk' 'list' 'desk' desk_id desk_id %}" method="post">
+                        <form action="{% url 'create_el_desk' 'list' 'desk' desk.id desk.id %}" method="post">
                             {% csrf_token %}
                             {{ lform.as_p }}
 

@@ -746,6 +746,14 @@ div.card-deadline {
     margin-bottom: 5px;
 }
 
+.desk-edit-input{
+    width: 40%
+    height: 30px;
+    font-size: 20px;
+    margin-top: 20px;
+    margin-bottom: 0px;
+}
+
 .edit-actions {
     display: flex;
     gap: 5px;
@@ -767,4 +775,23 @@ div.card-deadline {
     background: #f0f0f0;
     color: #333;
     border: 1px solid #ddd;
+}
+
+.desk-title-save, .desk-title-cancel {
+    font-size: 25 px;
+    height: 30px;
+    width: 5%;
+    margin-top: 15px;
+    color: #6a11cb;
+    background: white;
+}
+
+h3.desk-title{
+    font-size: 30px;
+    margin-bottom: 10px;
+}
+
+.desk-title-edit-btn{
+    font-size: 15px;
+    margin-top: 15px;
 }

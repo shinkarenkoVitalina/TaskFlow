@@ -85,8 +85,8 @@ def desk_view(request, desk_id):
         Основное представление рабочего пространства.
         Отображает все списки, карточки, чек-листы и их пункты для авторизованного пользователя.
         """
+    desk = models.Desk.objects.get(id=desk_id)
     if request.user.is_authenticated:
-        desk_title = models.Desk.objects.get(id=desk_id).title
         lists = models.List.objects.filter(parent_id=desk_id)
         cards = models.Card.objects.filter(parent__in=lists)
         checklists = models.CheckList.objects.filter(parent__in=cards)
@@ -107,8 +107,7 @@ def desk_view(request, desk_id):
                    'checklistform': checklist_form,
                    'itemform': item_form,
 
-                   'desk_id': desk_id,
-                   'desk_title': desk_title,
+                   'desk': desk
                    }
     else:
         context = {}
