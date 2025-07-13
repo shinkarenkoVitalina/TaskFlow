@@ -186,14 +186,6 @@ body {
     color: #333;
 }
 
-.modal-content textarea {
-    width: 95%;
-    height: 100px;
-    margin-bottom: 10px;
-    border-radius: 5px;
-    padding: 10px;
-}
-
 .modal-actions {
     display: flex;
     gap: 10px;
@@ -543,9 +535,6 @@ body.no_auth h1 {
 }
 
 
-
-
-
 .add-checklist-container,
 .add-item-container
 {
@@ -731,7 +720,6 @@ div.card-deadline {
     opacity: 1;
 }
 
-
 .title-edit {
     display: none;
     margin-bottom: 10px;
@@ -794,4 +782,50 @@ h3.desk-title{
 .desk-title-edit-btn{
     font-size: 15px;
     margin-top: 15px;
+}
+
+
+.description-container {
+    margin: 15px 0;
+}
+
+.description-view {
+    border-radius: 6px;
+    border-left: 3px solid #6a11cb;
+    position: relative;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 5px;
+    min-height: 50px;
+}
+
+.description-text {
+    font-size: 16px;
+    text-align: left;
+}
+
+
+.btn-edit-description {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background: none;
+    border: none;
+    color: #6a11cb;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+.description-view:hover .btn-edit-description {
+    opacity: 1;
+}
+
+.description-edit textarea {
+    width: 96%;
+    min-height: 100px;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    resize: vertical;
 }

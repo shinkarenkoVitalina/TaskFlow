@@ -246,3 +246,74 @@ function cancelEdit(button, type) {
     viewMode.style.display = 'flex';
     editMode.style.display = 'none';
 }
+
+
+// Включение редактирования описания
+function enableDescriptionEdit(cardId) {
+    const modal = document.querySelector(`#modal-${cardId}`);
+    const viewMode = modal.querySelector('.description-view');
+    const editMode = modal.querySelector('.description-edit');
+    const textarea = editMode.querySelector('.edit-description-input');
+
+    // Сохраняем оригинальное значение
+    textarea.dataset.original = textarea.value;
+
+    // Переключаем режимы
+    viewMode.style.display = 'none';
+    editMode.style.display = 'block';
+
+    // Фокусируем textarea
+    textarea.focus();
+}
+
+// Отмена редактирования
+function cancelDescriptionEdit(cardId) {
+    const modal = document.querySelector(`#modal-${cardId}`);
+    const viewMode = modal.querySelector('.description-view');
+    const editMode = modal.querySelector('.description-edit');
+    const textarea = editMode.querySelector('.edit-description-input');
+
+    // Восстанавливаем оригинальное значение
+    textarea.value = textarea.dataset.original;
+
+    // Переключаем режимы
+    viewMode.style.display = 'block';
+    editMode.style.display = 'none';
+}
+
+// Сохранение описания
+async function saveDescription(cardId, deskId) {
+    const modal = document.querySelector(`#modal-${cardId}`);
+    const textarea = modal.querySelector('.edit-description-input');
+    const description = textarea.value.trim();
+
+    try {
+        const response = await fetch(`/api/cards/${cardId}/`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': getCookie('csrftoken'),
+            },
+            body: JSON.stringify({ description })
+        });
+
+        if (response.ok) {
+            // Обновляем текст в режиме просмотра
+            const viewMode = modal.querySelector('.description-view');
+            const descriptionText = viewMode.querySelector('.description-text');
+            descriptionText.textContent = description || 'Добавьте описание...';
+
+            // Возвращаемся в режим просмотра
+            viewMode.style.display = 'block';
+            modal.querySelector('.description-edit').style.display = 'none';
+
+            // Можно добавить уведомление об успехе
+            console.log('Описание сохранено');
+        } else {
+            throw new Error('Ошибка сохранения');
+        }
+    } catch (error) {
+        console.error('Ошибка:', error);
+        alert('Не удалось сохранить описание');
+    }
+}

@@ -110,10 +110,27 @@
                                 </div>
                                 {% endif %}
 
-                                <textarea placeholder="Добавьте описание..."></textarea>
-                                <div class="modal-actions">
-                                    <button class="btn-save"> Сохранить </button>
+                                <div class="description-container">
+                                    <!-- Режим просмотра -->
+                                    <div class="description-view">
+                                        <p class="description-text">
+                                            {% if c.description %}{{ c.description }}{% else %}Добавьте описание...{% endif %}
+                                        </p>
+                                        <button class="btn-edit-description" onclick="enableDescriptionEdit({{ c.id }})">
+                                            <i class="fas fa-pencil-alt"></i>
+                                        </button>
+                                    </div>
+
+                                    <!-- Режим редактирования -->
+                                    <div class="description-edit" style="display: none;">
+                                        <textarea class="edit-description-input">{% if c.description %}{{ c.description }}{% endif %}</textarea>
+                                        <div class="edit-actions">
+                                            <button class="btn-save" onclick="saveDescription({{ c.id }}, {{ desk.id }})">Сохранить</button>
+                                            <button class="btn-cancel" onclick="cancelDescriptionEdit({{ c.id }})">Отмена</button>
+                                        </div>
+                                    </div>
                                 </div>
+
                                 <div class="modal-actions">
                                     <button class="btn add-deadline" onclick="openDeadlineModal({{ c.id }})">
                                         <i class="fas fa-calendar-alt"></i> Добавить дедлайн
@@ -298,7 +315,7 @@
     </body>
 {% endif %}
 
-<script src="{% static 'workspace/js/workspace.js' %}" defer></script>
+<script src="{% static 'workspace/js/workspace.js' %}"></script>
 
 </html>
 
