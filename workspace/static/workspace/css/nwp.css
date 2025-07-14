@@ -829,3 +829,22 @@ h3.desk-title{
     border: 1px solid #ddd;
     resize: vertical;
 }
+
+.edit-input::selection {
+    background: transparent;
+    color: inherit;
+}
+
+.edit-input::-moz-selection {
+    background: transparent;
+    color: inherit;
+}
+
+.edit-input {
+    caret-color: black;
+}
+
+.edit-input:focus {
+    outline: none;
+    border-color: rgba(255, 255, 255, 0.5);
+}

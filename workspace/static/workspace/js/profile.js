@@ -1,3 +1,40 @@
+function toggleOptions(element, menuClass) {
+    // Закрываем все открытые меню того же типа
+    document.querySelectorAll(menuClass).forEach(menu => {
+        if (menu !== element.nextElementSibling) {
+            menu.style.display = 'none';
+        }
+    });
+
+    // Переключаем текущее меню
+    const options = element.nextElementSibling;
+    options.style.display = options.style.display === 'block' ? 'none' : 'block';
+
+    // Останавливаем всплытие события, чтобы не сработал document.click
+    event.stopPropagation();
+}
+
+// Обработчик кликов для закрытия меню при клике вне их
+document.addEventListener('click', (event) => {
+    // Определяем все типы меню и их триггеры
+    const menuTypes = [
+        { trigger: '.list-options', menu: '.list-options-menu' },
+        { trigger: '.checklist-options', menu: '.checklist-options-menu' },
+        { trigger: '.item-dots', menu: '.item-options-menu' },
+        { trigger: '.workspace-options', menu: '.workspace-options-menu' },
+        { trigger: '.board-options', menu: '.board-options-menu' }
+    ];
+
+    // Для каждого типа меню проверяем, нужно ли его закрыть
+    menuTypes.forEach(({ trigger, menu }) => {
+        if (!event.target.closest(trigger) && !event.target.closest(menu)) {
+            document.querySelectorAll(menu).forEach(menuElement => {
+                menuElement.style.display = 'none';
+            });
+        }
+    });
+});
+
 // Показ/скрытие формы добавления доски
 document.querySelectorAll('.add-board-card').forEach(btn => {
     btn.addEventListener('click', function() {

@@ -456,3 +456,28 @@ body.no_auth h1 {
     padding: 3px 8px;
     font-size: 0.8rem;
 }
+
+.update-desc-board,
+.update-desk-workspace {
+    width: 100%;
+}
+
+
+.edit-input::selection {
+    background: transparent;
+    color: inherit;
+}
+
+.edit-input::-moz-selection {
+    background: transparent;
+    color: inherit;
+}
+
+.edit-input {
+    caret-color: black;
+}
+
+.edit-input:focus {
+    outline: none;
+    border-color: rgba(255, 255, 255, 0.5);
+}
