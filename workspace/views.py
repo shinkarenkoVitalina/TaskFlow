@@ -64,6 +64,10 @@ class CheckListCardViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.CheckListCardSerializer
 
 
+def temp_wp_page(request, desk_id):
+    desk = models.Desk.objects.get(id=desk_id)
+    context = {'desk': desk}
+    return render(request, 'workspace/desk_settings.html', context)
 
 
 @login_required

@@ -1,0 +1,462 @@
+body {
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+    display: flex;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #6a11cb, #2575fc);
+    color: #fff;
+}
+
+/* Сайдбар */
+.sidebar {
+    width: 240px;
+    background-color: rgba(0, 0, 0, 0.2);
+    color: white;
+    padding: 20px 0;
+    height: 100vh;
+    position: fixed;
+    box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+    backdrop-filter: blur(5px);
+}
+
+.user-info {
+    padding: 0 20px 20px;
+    border-bottom: 1px solid rgba(255,255,255,0.2);
+    margin-bottom: 20px;
+}
+
+.user-name {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.logout-btn {
+    background: rgba(255,255,255,0.1);
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    transition: background 0.2s;
+    text-decoration: none;
+    justify-content: center;
+}
+
+.logout-btn a {
+    text-decoration: none;
+    color: white;
+}
+
+.logout-btn:hover {
+    background: rgba(255,255,255,0.3);
+}
+
+/* Основное содержимое */
+.main-content {
+    flex: 1;
+    margin-left: 240px;
+    padding: 30px;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(5px);
+    width: calc(100% - 240px);
+    box-sizing: border-box;
+    min-height: 100vh;
+}
+
+/* Настройки рабочего пространства */
+.workspace-settings {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Секции */
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.section-header h2 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.btn-toggle-description {
+    background: none;
+    border: none;
+    color: rgba(255, 255, 255, 0.7);
+    cursor: pointer;
+    font-size: 16px;
+    padding: 5px;
+}
+
+.btn-toggle-description:hover {
+    color: white;
+}
+
+/* Описание */
+.description-content {
+    margin-bottom: 30px;
+}
+
+.description-view {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.description-text {
+    margin: 0;
+    line-height: 1.5;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.btn-edit-description {
+    align-self: flex-start;
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    border-radius: 4px;
+    color: white;
+    padding: 8px 12px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background 0.2s;
+}
+
+.btn-edit-description:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.edit-description-input {
+    width: 100%;
+    min-height: 100px;
+    padding: 10px;
+    border-radius: 4px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    background: rgba(0, 0, 0, 0.2);
+    color: white;
+    resize: vertical;
+    margin-bottom: 10px;
+}
+
+.edit-description-input:focus {
+    outline: none;
+    border-color: rgba(255, 255, 255, 0.5);
+}
+
+.edit-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.btn {
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.2s;
+}
+
+.btn-save {
+    background: #6a11cb;
+    color: white;
+    border: none;
+}
+
+.btn-save:hover {
+    background: #5a0db5;
+}
+
+.btn-cancel {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: #fff;
+}
+
+.btn-cancel:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* Участники */
+.add-member-form {
+    margin-bottom: 20px;
+}
+
+.form-row {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.form-row input {
+    flex: 1;
+    padding: 10px;
+    border-radius: 4px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    background: rgba(0, 0, 0, 0.2);
+    color: white;
+}
+
+.form-row input::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.role-dropdown {
+    position: relative;
+    width: 150px;
+}
+
+.role-dropdown select {
+    width: 100%;
+    padding: 10px 30px 10px 10px;
+    border-radius: 4px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    background: rgba(0, 0, 0, 0.2);
+    color: white;
+    appearance: none;
+    cursor: pointer;
+}
+
+.role-dropdown i {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.btn-invite {
+    background: #6a11cb;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 0 15px;
+    cursor: pointer;
+    transition: background 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.btn-invite:hover {
+    background: #5a0db5;
+}
+
+/* Список участников */
+.members-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.member-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.member-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.member-avatar {
+    font-size: 24px;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.member-details {
+    display: flex;
+    flex-direction: column;
+}
+
+.member-name {
+    font-weight: 500;
+    color: white;
+}
+
+.member-role {
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.member-actions {
+    position: relative;
+}
+
+.member-options {
+    padding: 5px;
+    cursor: pointer;
+    color: rgba(255, 255, 255, 0.6);
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.member-options:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+}
+
+.member-options-menu {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: 100%;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    z-index: 10;
+    min-width: 120px;
+    overflow: hidden;
+}
+
+.member-options-menu button {
+    width: 100%;
+    padding: 8px 12px;
+    text-align: left;
+    background: none;
+    border: none;
+    color: #333;
+    cursor: pointer;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.member-options-menu button:hover {
+    background: #f0f0f0;
+}
+
+.btn-delete-member {
+    color: #e74c3c !important;
+}
+
+.unauth-message {
+    text-align: center;
+    font-size: 1.5rem;
+    margin-bottom: 40px;
+    color: white;
+}
+
+.buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.btn.login {
+    text-decoration: none;
+    padding: 12px 25px;
+    border-radius: 25px;
+    font-size: 1rem;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    background: #fff;
+    color: #6a11cb;
+}
+
+.btn.login:hover {
+    background: #f0f0f0;
+    transform: translateY(-2px);
+}
+
+/* Адаптация для мобильных устройств */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+    }
+
+    .main-content {
+        margin-left: 0;
+        width: 100%;
+        padding: 20px;
+    }
+
+    .form-row {
+        flex-direction: column;
+    }
+
+    .role-dropdown {
+        width: 100%;
+    }
+}
+
+.breadcrumbs a {
+    color: rgba(255, 255, 255, 0.9);
+    text-decoration: none;
+}
+
+.breadcrumbs {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/*
+.permission-form {
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+    margin-top: 5px;
+}
+
+.permission-actions {
+    display: flex;
+    gap: 5px;
+    margin-top: 8px;
+}
+
+.permission-actions .btn {
+    padding: 5px 10px;
+    font-size: 12px;
+}
+
+.btn-update-permission {
+    width: 100%;
+    padding: 8px 12px;
+    text-align: left;
+    background: none;
+    border: none;
+    color: #333;
+    cursor: pointer;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.btn-update-permission:hover {
+    background: #f0f0f0;
+}
+
+.permission-select {
+    width: 100%;
+    padding: 5px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+}*/

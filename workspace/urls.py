@@ -11,5 +11,6 @@ urlpatterns = [
     path('create_el/<str:el_type>/<str:parent_type>/<int:parent_id>', views.create_el, name="create_el"),
     path('profile', views.profile, name='profile'),
     path('desk/<int:desk_id>', views.desk_view, name="desk"),
-    path('update_deadline/<int:card_id>/', views.update_deadline, name='update_deadline')
+    path('update_deadline/<int:card_id>/', views.update_deadline, name='update_deadline'),
+    path('desk_settings/<int:desk_id>/', views.temp_wp_page, name='desk_settings')
 ]

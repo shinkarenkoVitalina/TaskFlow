@@ -1,0 +1,149 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Управление пространством - {{ workspace.title }}</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'workspace/css/desk_settings.css' %}">
+</head>
+{% if request.user.is_authenticated %}
+<body>
+    <!-- Сайдбар -->
+    <div class="sidebar">
+        <div class="user-info">
+            <div class="user-name">{{ user.username }}</div>
+            <button class="logout-btn">
+                <i class="fas fa-sign-out-alt"></i>
+                <a href="{% url 'logout' %}" class="btn-logout">Выйти</a>
+            </button>
+        </div>
+    </div>
+
+    <!-- Основное содержимое -->
+    <div class="main-content">
+        <div class="workspace-settings">
+            <!-- Хлебные крошки -->
+            <div class="breadcrumbs">
+                <a href="{% url 'profile' %}">Мои пространства</a> &gt;
+                <span>{{ workspace.title }} - Настройки</span>
+            </div>
+
+            <!-- Описание рабочего пространства -->
+            <div class="description-section">
+                <div class="section-header">
+                    <h2>Описание</h2>
+                    <button class="btn-toggle-description" onclick="toggleDescription()">
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                </div>
+
+                <div class="description-content" id="descriptionContent">
+                    <div class="description-view" id="descriptionView">
+                        <p class="description-text">
+                            {% if workspace.description %}
+                                {{ workspace.description }}
+                            {% else %}
+                                Описание отсутствует
+                            {% endif %}
+                        </p>
+                        <button class="btn-edit-description" onclick="enableDescriptionEdit()">
+                            <i class="fas fa-pencil-alt"></i> Редактировать
+                        </button>
+                    </div>
+
+                    <div class="description-edit" id="descriptionEdit" style="display: none;">
+                        <textarea class="edit-description-input">{{ workspace.description }}</textarea>
+                        <div class="edit-actions">
+                            <button class="btn btn-save" onclick="saveDescription()">
+                                Сохранить
+                            </button>
+                            <button class="btn btn-cancel" onclick="cancelDescriptionEdit()">
+                                Отмена
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Участники рабочего пространства -->
+            <div class="members-section">
+                <div class="section-header">
+                    <h2>Участники</h2>
+                </div>
+
+                <!-- Форма добавления участника -->
+                <div class="add-member-form">
+                    <form action="{% url 'add_workspace_member' workspace.id %}" method="post">
+                        {% csrf_token %}
+                        <div class="form-row">
+                            <input type="text" name="username" placeholder="Введите имя пользователя" required>
+                            <div class="role-dropdown">
+                                <select name="role">
+                                    <option value="reader">Читатель</option>
+                                    <option value="editor">Редактор</option>
+                                    <option value="admin">Администратор</option>
+                                </select>
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                            <button type="submit" class="btn-invite">
+                                <i class="fas fa-user-plus"></i> Пригласить
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Список участников -->
+                <div class="members-list">
+                    {% for member in workspace.members.all %}
+                    <div class="member-card">
+                        <div class="member-info">
+                            <div class="member-avatar">
+                                <i class="fas fa-user-circle"></i>
+                            </div>
+                            <div class="member-details">
+                                <span class="member-name">{{ member.username }}</span>
+                                <span class="member-role">
+                                    {% if member == workspace.creator %}
+                                        Создатель
+                                    {% else %}
+                                        {{ member.workspacerole.role|default:"Читатель" }}
+                                    {% endif %}
+                                </span>
+                            </div>
+                        </div>
+
+                        {% if member != workspace.creator and user == workspace.creator %}
+                        <div class="member-actions">
+                            <div class="member-options" onclick="toggleMemberOptions(this)">
+                                <i class="fas fa-ellipsis-h"></i>
+                            </div>
+                            <div class="member-options-menu">
+                                <form action="{% url 'remove_workspace_member' workspace.id member.id %}" method="post">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn-delete-member">
+                                        <i class="fas fa-trash-alt"></i> Удалить
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{% static 'workspace/js/desk_settings.js' %}"></script>
+</body>
+{% else %}
+<h1 class="unauth-message">Кажется вы не авторизованы, войдите в аккаунт или зарегистрируйтесь для использования функций приложения</h1>
+<div class="buttons">
+    <a href="{% url 'auth' %}" class="btn login">Войти</a>
+    <a href="{% url 'reg' %}" class="btn login">Зарегистрироваться</a>
+</div>
+{% endif %}
+</html>

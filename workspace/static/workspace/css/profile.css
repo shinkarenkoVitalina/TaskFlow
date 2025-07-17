@@ -457,12 +457,6 @@ body.no_auth h1 {
     font-size: 0.8rem;
 }
 
-.update-desc-board,
-.update-desk-workspace {
-    width: 100%;
-}
-
-
 .edit-input::selection {
     background: transparent;
     color: inherit;
